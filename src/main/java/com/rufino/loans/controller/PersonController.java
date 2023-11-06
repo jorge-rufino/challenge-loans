@@ -51,6 +51,4 @@ public class PersonController {
 		
 		return ResponseEntity.noContent().build();		
 	}
-	
-	
 }
