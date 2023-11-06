@@ -22,13 +22,5 @@ public class Person {
 	private int age;
 	private String cpf;	
 	private double income;
-	private String location;
-	
-	public Person(PersonDto dto) {
-		this.name = dto.name();
-		this.age = dto.age();
-		this.cpf = dto.cpf();
-		this.income = dto.income();
-		this.location = dto.location();
-	}
+	private String location;	
 }

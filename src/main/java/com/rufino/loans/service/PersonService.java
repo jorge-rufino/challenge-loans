@@ -2,6 +2,7 @@ package com.rufino.loans.service;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,9 @@ public class PersonService {
 	}
 	
 	public Person createPerson(PersonDto dto) {
-		Person newPerson = new Person(dto);
+		Person newPerson = new Person();
+		
+		BeanUtils.copyProperties(dto, newPerson,"id");
 		
 		return repository.save(newPerson);
 	}
