@@ -30,7 +30,8 @@ public class PersonService {
 	}
 	
 	public Person updatePerson(Long id, PersonDto dto) {
-		Person updatePerson = repository.findById(id).orElse(null);
+		Person updatePerson = repository.findById(id).orElseThrow(
+				() -> new RuntimeException("Pessoa não encontrada."));
 		
 		BeanUtils.copyProperties(dto, updatePerson,"id");
 		
@@ -38,7 +39,8 @@ public class PersonService {
 	}
 	
 	public Person updatePersonPartial(Long id, PersonDto dto) {
-		Person updatePerson = repository.findById(id).orElse(null);
+		Person updatePerson = repository.findById(id).orElseThrow(
+				() -> new RuntimeException("Pessoa não encontrada."));
 		
 		Utils.copyNonNullProperties(dto, updatePerson);
 		
