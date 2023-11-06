@@ -1,5 +1,7 @@
 package com.rufino.loans.model;
 
-public record PersonDto(int age, String name, String cpf, double income, String location) {
+import java.math.BigDecimal;
+
+public record PersonDto(int age, String name, String cpf, BigDecimal income, String location) {
 
 }

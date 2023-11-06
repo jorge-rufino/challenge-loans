@@ -1,5 +1,7 @@
 package com.rufino.loans.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,6 @@ public class Person {
 	private String name;
 	private int age;
 	private String cpf;	
-	private double income;
+	private BigDecimal income;
 	private String location;	
 }

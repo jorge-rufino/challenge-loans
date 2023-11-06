@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.rufino.loans.model.Person;
 import com.rufino.loans.model.PersonDto;
 import com.rufino.loans.repository.PersonRepository;
+import com.rufino.loans.util.Utils;
 
 @Service
 public class PersonService {
@@ -26,5 +27,21 @@ public class PersonService {
 		BeanUtils.copyProperties(dto, newPerson,"id");
 		
 		return repository.save(newPerson);
+	}
+	
+	public Person updatePerson(Long id, PersonDto dto) {
+		Person updatePerson = repository.findById(id).orElse(null);
+		
+		BeanUtils.copyProperties(dto, updatePerson,"id");
+		
+		return repository.save(updatePerson);
+	}
+	
+	public Person updatePersonPartial(Long id, PersonDto dto) {
+		Person updatePerson = repository.findById(id).orElse(null);
+		
+		Utils.copyNonNullProperties(dto, updatePerson);
+		
+		return repository.save(updatePerson);
 	}
 }
