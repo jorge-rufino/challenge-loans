@@ -18,8 +18,9 @@ public class LoanMock {
 	@PostConstruct
 	private void createMockLoans() {
 		Loan l1 = new Loan(1L,Type.PERSONAL,4.0);
-		Loan l2 = new Loan(2L,Type.CONSIGNMENT,2.0);
-		Loan l3 = new Loan(3L,Type.GUARANTEED,3.0);
+		Loan l2 = new Loan(2L,Type.GUARANTEED,3.0);
+		Loan l3 = new Loan(3L,Type.CONSIGNMENT,2.0);
+		
 		
 		repository.save(l1);
 		repository.save(l2);
