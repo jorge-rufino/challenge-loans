@@ -20,6 +20,7 @@ public class PersonService {
 	final private BigDecimal limit1 = new BigDecimal("3000");
 	final private BigDecimal limit2 = new BigDecimal("5000");
 	final private int ageLimit = 30;
+	final private int ageMaxLimit = 60;
 	
 	@Autowired
 	private PersonRepository repository;
@@ -82,6 +83,10 @@ public class PersonService {
 		if(person.getIncome().compareTo(limit1) == 1 && person.getIncome().compareTo(limit2) == -1 && person.getAge() < ageLimit 
 				&& person.getLocation().equals("SP")) {
 			person.addLoan(loanRepository.findByType(Type.GUARANTEED));
+		}
+		
+		if(person.getAge() > ageMaxLimit) {
+			person.addLoan(loanRepository.findByType(Type.PERSONAL));
 		}
 		
 		return person;
