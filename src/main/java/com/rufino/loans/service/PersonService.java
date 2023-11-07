@@ -7,6 +7,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rufino.loans.exception.EntityNotFoundException;
+import com.rufino.loans.exception.MaxAgeException;
+import com.rufino.loans.exception.NegativeIncomeException;
 import com.rufino.loans.model.Person;
 import com.rufino.loans.model.PersonDto;
 import com.rufino.loans.model.Type;
@@ -20,7 +23,8 @@ public class PersonService {
 	final private BigDecimal limit1 = new BigDecimal("3000");
 	final private BigDecimal limit2 = new BigDecimal("5000");
 	final private int ageLimit = 30;
-	final private int ageMaxLimit = 60;
+	final private int ageMaxLimit60 = 60;
+	final private int ageMaxLimit80 = 80;
 	
 	@Autowired
 	private PersonRepository repository;
@@ -35,6 +39,14 @@ public class PersonService {
 	public Person createPerson(PersonDto dto) {
 		Person newPerson = new Person();
 		
+		if (dto.age() >= ageMaxLimit80) {
+			throw new MaxAgeException("Idade acima da máxima permitida de 80 anos");
+		}
+		
+		if(dto.income().compareTo(new BigDecimal("0")) == -1) {
+			throw new NegativeIncomeException("Renda não pode ser negativa.");
+		}
+		
 		BeanUtils.copyProperties(dto, newPerson,"id");
 		
 		defineLoan(newPerson);
@@ -44,7 +56,7 @@ public class PersonService {
 	
 	public Person updatePerson(Long id, PersonDto dto) {
 		Person updatePerson = repository.findById(id).orElseThrow(
-				() -> new RuntimeException("Pessoa não encontrada."));
+				() -> new EntityNotFoundException("Pessoa não encontrada."));
 		
 		updatePerson.getLoans().clear();
 		
@@ -57,7 +69,7 @@ public class PersonService {
 	
 	public Person updatePersonPartial(Long id, PersonDto dto) {
 		Person updatePerson = repository.findById(id).orElseThrow(
-				() -> new RuntimeException("Pessoa não encontrada."));
+				() -> new EntityNotFoundException("Pessoa não encontrada."));
 		
 		updatePerson.getLoans().clear();
 		
@@ -85,7 +97,7 @@ public class PersonService {
 			person.addLoan(loanRepository.findByType(Type.GUARANTEED));
 		}
 		
-		if(person.getAge() > ageMaxLimit) {
+		if(person.getAge() > ageMaxLimit60) {
 			person.addLoan(loanRepository.findByType(Type.PERSONAL));
 		}
 		
