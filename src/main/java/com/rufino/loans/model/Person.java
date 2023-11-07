@@ -1,8 +1,8 @@
 package com.rufino.loans.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +30,7 @@ public class Person {
 	private String location;
 	
 	@ManyToMany
-	private List<Loan> loans = new ArrayList<>();
+	private Set<Loan> loans = new HashSet<>();
 	
 	public void addLoan (Loan loan) {
 		this.loans.add(loan);
