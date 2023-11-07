@@ -18,6 +18,8 @@ import com.rufino.loans.model.Person;
 import com.rufino.loans.model.PersonDto;
 import com.rufino.loans.service.PersonService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
@@ -32,13 +34,13 @@ public class PersonController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Person> createPerson(@RequestBody PersonDto dto){
+	public ResponseEntity<Person> createPerson(@RequestBody @Valid PersonDto dto){
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(dto));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updatePerson(@PathVariable Long id, @RequestBody PersonDto dto){
+	public ResponseEntity<Void> updatePerson(@PathVariable Long id, @RequestBody @Valid PersonDto dto){
 		personService.updatePerson(id, dto);
 		
 		return ResponseEntity.noContent().build();		
